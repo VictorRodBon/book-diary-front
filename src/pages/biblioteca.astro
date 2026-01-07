@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Menu from '../components/Menu.astro';
+---
+
+<Layout>
+  <Menu />
+
+  <h1>Mi biblioteca</h1>
+
+  <div id="lista-libros"></div>
+
+  <script>
+    const stored = sessionStorage.getItem("biblioteca");
+    const list = stored ? JSON.parse(stored) : [];
+
+    const container = document.getElementById("lista-libros");
+
+    if (list.length === 0) {
+      container.innerHTML = "<p>No hay libros en la biblioteca.</p>";
+    } else {
+      container.innerHTML = list
+        .map(key => `<p>Libro: ${key}</p>`)
+        .join("");
+    }
+  </script>
+</Layout>

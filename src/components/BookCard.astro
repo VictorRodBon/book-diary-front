@@ -1,0 +1,108 @@
+---
+import type { Book } from "../types/Book";
+const { book } = Astro.props;
+
+---
+
+<div class="card">
+  <div class="cover">
+    {book.cover_id ? (
+      <img
+        src={`https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`}
+        alt={book.title}
+      />
+    ) : (
+      <div class="no-cover">Sin portada</div>
+    )}
+  </div>
+
+  <div class="info">
+    <h3 class="title">{book.title}</h3>
+    <p class="author">{book.author}</p>
+    <p class="year">{book.year ?? "Año desconocido"}</p>
+
+    <div class="actions">
+      {book.edition_key && (
+        <a class="button details" href={`/libro/${book.edition_key}`}>
+          Ver detalles
+        </a>
+      )}
+      <slot />
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<style>
+  .card {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+    background: #fafafa;
+    border: 1px solid #e5e5e5;
+    transition: background .2s ease, border-color .2s ease;
+  }
+
+  .card:hover {
+    background: #f5f5f5;
+    border-color: #dcdcdc;
+  }
+
+  .cover img {
+    width: 95px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .no-cover {
+    width: 95px;
+    height: 140px;
+    background: #eaeaea;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    font-size: .85rem;
+  }
+
+  .info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+  }
+
+  .title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #222;
+  }
+
+  .author {
+    margin: 0;
+    color: #555;
+    font-size: .95rem;
+  }
+
+  .year {
+    color: #777;
+    font-size: .85rem;
+    margin-bottom: .6rem;
+  }
+
+  .actions {
+    display: flex;
+    gap: .5rem;
+    margin-top: auto;
+  }
+
+
+</style>

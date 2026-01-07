@@ -1,0 +1,16 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const { edition } = Astro.params;
+
+const res = await fetch(`/api/book.json?edition=${edition}`);
+const book = await res.json();
+---
+
+<Layout title={book.title}>
+  <p><strong>Páginas:</strong> {book.number_of_pages ?? "No disponible"}</p>
+  <p><strong>Publicado:</strong> {book.publish_date}</p>
+
+  <h3>Datos completos</h3>
+  <pre>{JSON.stringify(book, null, 2)}</pre>
+</Layout>
