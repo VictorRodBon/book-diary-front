@@ -1,0 +1,8 @@
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  padding: 1rem;
+
+  /* 3 columnas en pantallas grandes */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}

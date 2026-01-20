@@ -1,0 +1,50 @@
+---
+
+---
+<script>
+document.getElementById("buscar")?.addEventListener("click", cargarDatos);
+
+async function cargarDatos() {
+  const titulo = (document.getElementById("titulo") as HTMLInputElement).value;
+  const cantidad = (document.getElementById("cantidad") as HTMLSelectElement).value;
+  const pagina = (document.getElementById("pagina") as HTMLSelectElement).value;
+
+  try {
+    const parametros = new URLSearchParams({
+      title: titulo,
+      page: pagina,
+      limit: cantidad
+    });
+
+    const res = await fetch("https://openlibrary.org/search.json?" + parametros.toString());
+    const data = await res.json();
+    
+    console.log(data.docs);
+
+    const evento=new CustomEvent("resultado",{
+        detail:data.docs
+    })
+
+    dispatchEvent(evento);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+
+</script>
+<nav>
+    <input type="text" placeholder="Título" id="titulo">
+    <select name="" id="cantidad">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+    </select>
+    <select name="" id="pagina">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+    <button id="buscar">Buscar</button>
+    
+</nav>
